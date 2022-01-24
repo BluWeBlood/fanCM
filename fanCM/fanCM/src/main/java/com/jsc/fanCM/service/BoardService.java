@@ -70,4 +70,18 @@ public class BoardService {
         );
         return board.getId();
     }
+
+
+    @Transactional
+    public String delete(Long id){
+        Optional<Board> boardOptional = findById(id);
+        boardOptional.orElseThrow(
+                () -> new NoSuchElementException("해당 게시물은 존재하지 않습니다.")
+        );
+
+        Board findBoard = boardOptional.get();
+
+        boardRepository.delete(findBoard);
+        return "redirect:/";
+    }
 }
