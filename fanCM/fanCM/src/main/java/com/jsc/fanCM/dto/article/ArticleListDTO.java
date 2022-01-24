@@ -22,4 +22,5 @@ public class ArticleListDTO {
         this.regDate = article.getRegDate();
         this.updateDate = article.getUpdateDate();
     }
+
 }

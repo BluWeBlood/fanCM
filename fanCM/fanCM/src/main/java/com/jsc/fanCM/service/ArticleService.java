@@ -45,6 +45,13 @@ public class ArticleService {
         return articleOptional.get();
     }
 
+    public ArticleDTO getArticle(Long id) {
+        Article findArticle = getById(id);
+        ArticleDTO articleDTO = new ArticleDTO(findArticle);
+
+        return articleDTO;
+    }
+
     @Transactional
     public void modifyArticle(ArticleModifyForm articleModifyForm,Long id) {
 
@@ -65,5 +72,10 @@ public class ArticleService {
             articleDTOList.add(articleDTO);
         }
         return articleDTOList;
+    }
+
+    public void delete(Long id) {
+        Article findArticle = getById(id);
+        articleRepository.delete(findArticle);
     }
 }
