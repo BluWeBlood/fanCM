@@ -3,6 +3,7 @@ package com.jsc.fanCM.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -42,5 +43,12 @@ public class Article {
     public void setMember(Member member) {
         this.member = member;
         member.getArticles().add(this);
+    }
+
+    public void modifyArticle(String title, String body) {
+        this.title = title;
+        this.body = body;
+
+        this.updateDate = LocalDateTime.now();
     }
 }
