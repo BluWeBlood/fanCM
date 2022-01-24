@@ -2,6 +2,7 @@ package com.jsc.fanCM.controller;
 
 import com.jsc.fanCM.domain.Article;
 import com.jsc.fanCM.domain.Member;
+import com.jsc.fanCM.dto.article.ArticleDTO;
 import com.jsc.fanCM.dto.article.ArticleModifyForm;
 import com.jsc.fanCM.dto.article.ArticleSaveForm;
 import com.jsc.fanCM.service.ArticleService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -75,5 +77,13 @@ public class ArticleController {
         } catch (Exception e) {
             return "usr/article/modify";
         }
+    }
+
+    @GetMapping("/articles")
+    public String showList(Model model) {
+        List<ArticleDTO> articleList = articleService.getArticleList();
+        //html에 담기
+        model.addAttribute("articleList",articleList);
+        return "usr/article/list";
     }
 }

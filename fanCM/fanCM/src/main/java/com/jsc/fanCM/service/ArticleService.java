@@ -3,12 +3,15 @@ package com.jsc.fanCM.service;
 import com.jsc.fanCM.dao.ArticleRepository;
 import com.jsc.fanCM.domain.Article;
 import com.jsc.fanCM.domain.Member;
+import com.jsc.fanCM.dto.article.ArticleDTO;
 import com.jsc.fanCM.dto.article.ArticleModifyForm;
 import com.jsc.fanCM.dto.article.ArticleSaveForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -50,5 +53,17 @@ public class ArticleService {
                 articleModifyForm.getTitle(),
                 articleModifyForm.getBody()
         );
+    }
+
+    public List<ArticleDTO> getArticleList() {
+        List<Article> articleList = articleRepository.findAll();
+        //빈 articlelist 생성후 for문으로 옮겨 return
+        List<ArticleDTO> articleDTOList = new ArrayList<>();
+
+        for (Article article:articleList) {
+            ArticleDTO articleDTO = new ArticleDTO(article);
+            articleDTOList.add(articleDTO);
+        }
+        return articleDTOList;
     }
 }
