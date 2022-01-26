@@ -41,12 +41,12 @@ public class BoardController {
         return "redirect:/adm/boards";
     }
 
-    // 게시판
+    // 게시판 리스트
     @GetMapping("/boards")
     public String showBoard(Model model) {
         List<Board> boardlist = boardService.findAll();
 
-        model.addAttribute("bardList", boardlist);
+        model.addAttribute("boardList", boardlist);
 
         return "adm/board/list";
     }
@@ -62,14 +62,14 @@ public class BoardController {
         return "adm/board/detail";
     }
 
-    @GetMapping("/boards/modify")
+    @GetMapping("/boards/modify/{id}")
     public String showModifyBoard(Model model){
         model.addAttribute("BoardModifyForm",new BoardModifyForm());
 
         return "adm/board/modify";
     }
 
-    @PostMapping("/boards/modify")
+    @PostMapping("/boards/modify/{id}")
     public String modifyBoard(BoardModifyForm boardModifyForm) {
         try {
             boardService.modify(boardModifyForm);
