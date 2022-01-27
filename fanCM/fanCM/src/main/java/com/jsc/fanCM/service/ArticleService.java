@@ -2,6 +2,7 @@ package com.jsc.fanCM.service;
 
 import com.jsc.fanCM.dao.ArticleRepository;
 import com.jsc.fanCM.domain.Article;
+import com.jsc.fanCM.domain.Board;
 import com.jsc.fanCM.domain.Member;
 import com.jsc.fanCM.dto.article.ArticleDTO;
 import com.jsc.fanCM.dto.article.ArticleModifyForm;
@@ -22,12 +23,13 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public void save(ArticleSaveForm articleSaveForm, Member member){
+    public void save(ArticleSaveForm articleSaveForm, Member member, Board board){
         Article article = Article.createArticle(
             articleSaveForm.getTitle(),
             articleSaveForm.getBody()
         );
         article.setMember(member);
+        article.setBoard(board);
 
         articleRepository.save(article);
     }

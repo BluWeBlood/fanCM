@@ -1,11 +1,14 @@
 package com.jsc.fanCM.controller;
 
 import com.jsc.fanCM.domain.Article;
+import com.jsc.fanCM.domain.Board;
 import com.jsc.fanCM.domain.Member;
 import com.jsc.fanCM.dto.article.ArticleDTO;
 import com.jsc.fanCM.dto.article.ArticleModifyForm;
 import com.jsc.fanCM.dto.article.ArticleSaveForm;
 import com.jsc.fanCM.service.ArticleService;
+
+import com.jsc.fanCM.service.BoardService;
 import com.jsc.fanCM.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,7 @@ import java.util.List;
 public class ArticleController {
     private final ArticleService articleService;
     private final MemberService memberService;
+    private final BoardService boardService;
 
     @GetMapping("/articles/write")
     public String showWrite(Model model) {
@@ -39,9 +43,11 @@ public class ArticleController {
 
         try {
             Member findMember = memberService.findByLoginId(principal.getName());
+            Board findBoard = boardService.getBoard(articleSaveForm.getBoard_id());
             articleService.save(
                     articleSaveForm,
-                    findMember
+                    findMember,
+                    findBoard
             );
         } catch (IllegalStateException e) {
             model.addAttribute("err_msg", e.getMessage());

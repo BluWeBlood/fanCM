@@ -51,4 +51,9 @@ public class Article {
 
         this.updateDate = LocalDateTime.now();
     }
+
+    public void setBoard(Board board) {
+        this.board = board;
+        board.getArticles().add(this);
+    }
 }
