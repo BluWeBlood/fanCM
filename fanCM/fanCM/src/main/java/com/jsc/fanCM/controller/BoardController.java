@@ -66,7 +66,8 @@ public class BoardController {
     public String showModifyBoard(@PathVariable(name="id")Long id, Model model){
         try{
             BoardDTO board = boardService.getBoardDetail(id);
-            model.addAttribute("BoardModifyForm",new BoardModifyForm(
+            model.addAttribute("board",new BoardModifyForm(
+                    board.getId(),
                     board.getName(),
                     board.getDetail()
             ));
