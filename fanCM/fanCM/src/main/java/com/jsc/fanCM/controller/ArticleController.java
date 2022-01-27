@@ -34,16 +34,15 @@ public class ArticleController {
     @PostMapping("/articles/write")
     public String doWrite(@Validated ArticleSaveForm articleSaveForm, BindingResult bindingResult, Model model, Principal principal){
         if(bindingResult.hasErrors()) {
-            return "usr/article.write";
+            return "usr/article/write";
         }
 
         try {
-
-        Member findMember = memberService.findByLoginId(principal.getName());
-        articleService.save(
-                articleSaveForm,
-                findMember
-        );
+            Member findMember = memberService.findByLoginId(principal.getName());
+            articleService.save(
+                    articleSaveForm,
+                    findMember
+            );
         } catch (IllegalStateException e) {
             model.addAttribute("err_msg", e.getMessage());
 

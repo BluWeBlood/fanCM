@@ -57,8 +57,8 @@ public class BoardService {
     }
 
     @Transactional
-    public Long modify(BoardModifyForm boardModifyForm) throws NoSuchElementException{
-        Optional<Board> boardOptional = boardRepository.findByName(boardModifyForm.getName());
+    public Long modify(Long id,BoardModifyForm boardModifyForm) throws NoSuchElementException{
+        Optional<Board> boardOptional = boardRepository.findById(id);
 
         boardOptional.orElseThrow(
             () -> new NoSuchElementException("해당 게시판은 존재하지 않습니다.")
