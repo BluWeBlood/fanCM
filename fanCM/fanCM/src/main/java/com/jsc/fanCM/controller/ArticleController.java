@@ -6,6 +6,7 @@ import com.jsc.fanCM.domain.Member;
 import com.jsc.fanCM.dto.article.ArticleDTO;
 import com.jsc.fanCM.dto.article.ArticleModifyForm;
 import com.jsc.fanCM.dto.article.ArticleSaveForm;
+import com.jsc.fanCM.dto.board.BoardDTO;
 import com.jsc.fanCM.service.ArticleService;
 
 import com.jsc.fanCM.service.BoardService;
@@ -31,6 +32,10 @@ public class ArticleController {
 
     @GetMapping("/boards/{id}/articles/write")
     public String showWrite(@PathVariable(name = "id")Long id, Model model) {
+        BoardDTO boardDetail = boardService.getBoardDetail(id);
+
+        model.addAttribute("board", boardDetail);
+
         model.addAttribute("articleSaveForm",new ArticleSaveForm());
 
         return "usr/article/write";
@@ -57,7 +62,7 @@ public class ArticleController {
         return "redirect:/articles";
     }
 
-    @GetMapping("/boards/{id}/articles/modify/{id}")
+    @GetMapping("articles/modify/{id}")
     public String showModify(@PathVariable(name = "article")Long id, Model model) {
         try {
             Article article = articleService.getById(id);
@@ -102,7 +107,11 @@ public class ArticleController {
     @GetMapping("/articles")
     public String showList(Model model) {
         List<ArticleDTO> articleList = articleService.getArticleList();
+
+        ArticleDTO articleDTO = articleList.get(0);
+
         //html에 담기
+        model.addAttribute("boardName", articleDTO.getBoardName());
         model.addAttribute("articleList",articleList);
         return "usr/article/list";
     }
