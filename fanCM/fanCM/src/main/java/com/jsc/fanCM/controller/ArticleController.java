@@ -29,14 +29,14 @@ public class ArticleController {
     private final MemberService memberService;
     private final BoardService boardService;
 
-    @GetMapping("/articles/write")
-    public String showWrite(Model model) {
+    @GetMapping("/boards/{id}/articles/write")
+    public String showWrite(@PathVariable(name = "id")Long id, Model model) {
         model.addAttribute("articleSaveForm",new ArticleSaveForm());
 
         return "usr/article/write";
     }
-    @PostMapping("/articles/write")
-    public String doWrite(@Validated ArticleSaveForm articleSaveForm, BindingResult bindingResult, Model model, Principal principal){
+    @PostMapping("/boards/{id}/articles/write")
+    public String doWrite(@Validated ArticleSaveForm articleSaveForm, BindingResult bindingResult, Model model, Principal principal,  @PathVariable(name = "id")Long id){
         if(bindingResult.hasErrors()) {
             return "usr/article/write";
         }
@@ -54,10 +54,10 @@ public class ArticleController {
 
             return "usr/article/write";
         }
-        return "redirect:/";
+        return "redirect:/articles";
     }
 
-    @GetMapping("/articles/modify/{id}")
+    @GetMapping("/boards/{id}/articles/modify/{id}")
     public String showModify(@PathVariable(name = "article")Long id, Model model) {
         try {
             Article article = articleService.getById(id);
