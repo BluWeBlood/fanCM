@@ -8,25 +8,20 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="container">
-        <!--
-        <div class="contents">
-            <div class="">
-                <span>게시판 이름 :</span>
-                <span th:text="${boardName}"></span>
-            </div>
 
-            <form action="" th:action="@{~/boards/} + ${board.id} + @{/articles/modify}" method="POST">
-                <input type="hidden" th:value="${board.id}" name="board_id">
+    <div class="container">
+
+        <div class="contents">
+            <form action="" th:action="@{~/articles/modify/} + ${article.id}" method="POST">
 
                 <div class="form-item">
-                    <span>제목</span>
-                    <input name="title" type="text" required>
+                    <span>게시판 이름 :</span>
+                    <input type="text" name="title" th:value="${article.title}">
                 </div>
 
                 <div class="form-item">
-                    <span>내용</span>
-                    <textarea name="body" id="article-body" cols="30" rows="10"></textarea>
+                    <span>게시판 내용</span>
+                    <input type="text" name="body" th:value="${article.body}">
                 </div>
 
                 <div class="form-item">
@@ -37,9 +32,7 @@
                 </div>
             </form>
         </div>
-        -->
     </div>
-
 
 </div>
 </body>

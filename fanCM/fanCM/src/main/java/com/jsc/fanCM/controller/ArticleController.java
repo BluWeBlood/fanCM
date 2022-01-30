@@ -63,15 +63,13 @@ public class ArticleController {
     }
 
     @GetMapping("articles/modify/{id}")
-    public String showModify(@PathVariable(name = "article")Long id, Model model) {
+    public String showModify(@PathVariable(name = "id")Long id, Model model) {
         try {
             ArticleDTO article = articleService.getArticle(id);
             // Article article = articleService.getById(id);
 
             model.addAttribute("article", article);
-
             return "usr/article/modify";
-
         } catch (Exception e) {
             return "redirect:/";
         }
