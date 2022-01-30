@@ -65,12 +65,10 @@ public class ArticleController {
     @GetMapping("articles/modify/{id}")
     public String showModify(@PathVariable(name = "article")Long id, Model model) {
         try {
-            Article article = articleService.getById(id);
+            ArticleDTO article = articleService.getArticle(id);
+            // Article article = articleService.getById(id);
 
-            model.addAttribute("articleModifyForm", new ArticleModifyForm(
-                    article.getTitle(),
-                    article.getBody()
-            ));
+            model.addAttribute("article", article);
 
             return "usr/article/modify";
 
@@ -82,7 +80,9 @@ public class ArticleController {
     @PostMapping("/articles/modify/{id}")
     public String doModify(@PathVariable(name="id")Long id,ArticleModifyForm articleModifyForm) {
         try {
-            articleService.modifyArticle(articleModifyForm, id);
+            Board findBoard = boardService.getBoard(id);
+
+            articleService.modifyArticle(articleModifyForm,findBoard, id);
             return "redirect:/articles/" + id;
         } catch (Exception e) {
             return "usr/article/modify";
@@ -122,7 +122,7 @@ public class ArticleController {
             ArticleDTO findArticle = articleService.getArticle(id);
             model.addAttribute("article",findArticle);
 
-            return "usr/article/detail/";
+            return "usr/article/detail";
         } catch (Exception e) {
             return "redirect:/";
         }

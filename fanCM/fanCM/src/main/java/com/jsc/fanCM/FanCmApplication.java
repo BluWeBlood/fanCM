@@ -9,5 +9,4 @@ public class FanCmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FanCmApplication.class, args);
 	}
-
 }

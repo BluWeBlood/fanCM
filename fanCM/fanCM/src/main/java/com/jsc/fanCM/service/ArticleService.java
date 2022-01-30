@@ -56,13 +56,14 @@ public class ArticleService {
     }
 
     @Transactional
-    public void modifyArticle(ArticleModifyForm articleModifyForm,Long id) {
-
+    public void modifyArticle(ArticleModifyForm articleModifyForm,Board board,Long id) {
         Article findArticle = getById(id);
         findArticle.modifyArticle(
                 articleModifyForm.getTitle(),
                 articleModifyForm.getBody()
         );
+
+        findArticle.setBoard(board);
     }
 
     public List<ArticleDTO> getArticleList() {

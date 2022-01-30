@@ -12,6 +12,8 @@ public class ArticleDTO {
     private String body;
 
     private String authorName;
+
+    private Long boardId;
     private String boardName;
 
     private LocalDateTime regDate;
@@ -23,6 +25,7 @@ public class ArticleDTO {
         this.body = article.getBody();
 
         this.authorName = article.getMember().getName();
+        this.boardId = article.getBoard().getId();
         this.boardName = article.getBoard().getName();
         this.regDate = article.getRegDate();
         this.updateDate = article.getUpdateDate();

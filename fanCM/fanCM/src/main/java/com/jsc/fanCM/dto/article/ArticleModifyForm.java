@@ -8,4 +8,6 @@ import lombok.Data;
 public class ArticleModifyForm {
     private String title;
     private String body;
+
+    private Long board_id;
 }
