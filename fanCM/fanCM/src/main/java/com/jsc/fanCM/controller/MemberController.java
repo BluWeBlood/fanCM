@@ -84,4 +84,13 @@ public class MemberController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/members/logout")
+    public String doLogout(Principal principal, Model model) {
+        String name = "";
+        if(principal != null) {
+
+        }
+        return "redirect:/";
+    }
 }

@@ -12,16 +12,22 @@
     <div class="container">
 
         <div class="contents">
+            <div class="">
+                <span>게시판 이름 :</span>
+                <input th:value="${article.boardName}">
+            </div>
+
             <form action="" th:action="@{~/articles/modify/} + ${article.id}" method="POST">
+                <input type="hidden" th:value="${article.boardId}" name="board_id">
 
                 <div class="form-item">
-                    <span>게시판 이름 :</span>
+                    <span>게시글 제목</span>
                     <input type="text" name="title" th:value="${article.title}">
                 </div>
 
                 <div class="form-item">
-                    <span>게시판 내용</span>
-                    <input type="text" name="body" th:value="${article.body}">
+                    <span>게시글 내용</span>
+                    <textarea name="body" cols="30" rows="10" th:text="${article.body}"></textarea>
                 </div>
 
                 <div class="form-item">
