@@ -1,10 +1,12 @@
 package com.jsc.fanCM.controller;
 
 import com.jsc.fanCM.domain.Board;
+import com.jsc.fanCM.domain.Member;
 import com.jsc.fanCM.dto.board.BoardDTO;
 import com.jsc.fanCM.dto.board.BoardModifyForm;
 import com.jsc.fanCM.dto.board.BoardSaveForm;
 import com.jsc.fanCM.service.BoardService;
+import com.jsc.fanCM.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -25,6 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
+    private final MemberService memberService;
 
     @GetMapping("/boards/add")
     public String showAddBoard(Model model) {
@@ -34,9 +38,10 @@ public class BoardController {
     }
 
     @PostMapping("/boards/add")
-    public String doAddBoard(BoardSaveForm boardSaveForm) {
+    public String doAddBoard(BoardSaveForm boardSaveForm, Principal principal) {
 
-        boardService.save(boardSaveForm);
+        Member findAdmin = memberService.findByLoginId(principal.getName());
+        boardService.save(boardSaveForm, findAdmin);
 
         return "redirect:/adm/boards";
     }

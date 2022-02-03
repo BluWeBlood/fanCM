@@ -3,6 +3,7 @@ package com.jsc.fanCM.service;
 import com.jsc.fanCM.dao.BoardRepository;
 import com.jsc.fanCM.domain.Article;
 import com.jsc.fanCM.domain.Board;
+import com.jsc.fanCM.domain.Member;
 import com.jsc.fanCM.dto.article.ArticleListDTO;
 import com.jsc.fanCM.dto.board.BoardDTO;
 import com.jsc.fanCM.dto.board.BoardModifyForm;
@@ -24,10 +25,11 @@ public class BoardService {
 
     // DB 저장/수정/삭제시 필요
     @Transactional
-    public void save(BoardSaveForm boardSaveForm){
+    public void save(BoardSaveForm boardSaveForm, Member member){
         Board board = Board.createBoard(
                 boardSaveForm.getName(),
-                boardSaveForm.getDetail()
+                boardSaveForm.getDetail(),
+                member
         );
         boardRepository.save(board);
     }

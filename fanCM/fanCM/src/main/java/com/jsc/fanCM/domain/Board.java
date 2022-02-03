@@ -23,15 +23,21 @@ public class Board {
     private LocalDateTime regDate = LocalDateTime.now();
     private LocalDateTime updateDate = LocalDateTime.now();
 
+    //board 혼자만 가져오기
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Article> articles = new ArrayList<>();
 
     //생성 매소드
-    public static Board createBoard(String name, String detail) {
+    public static Board createBoard(String name, String detail,Member member) {
         Board board = new Board();
 
         board.name = name;
         board.detail = detail;
+        board.member = member;
 
         return board;
     }
