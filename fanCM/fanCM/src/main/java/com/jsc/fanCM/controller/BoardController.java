@@ -24,20 +24,19 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/adm")
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
     private final MemberService memberService;
 
-    @GetMapping("/boards/add")
+    @GetMapping("/adm/boards/add")
     public String showAddBoard(Model model) {
         model.addAttribute("boardSaveForm",new BoardSaveForm());
 
         return "adm/board/add";
     }
 
-    @PostMapping("/boards/add")
+    @PostMapping("/adm/boards/add")
     public String doAddBoard(BoardSaveForm boardSaveForm, Principal principal) {
 
         Member findAdmin = memberService.findByLoginId(principal.getName());
@@ -67,7 +66,7 @@ public class BoardController {
         return "adm/board/detail";
     }
 
-    @GetMapping("/boards/modify/{id}")
+    @GetMapping("/adm/boards/modify/{id}")
     public String showModifyBoard(@PathVariable(name="id")Long id, Model model){
         try{
             BoardDTO board = boardService.getBoardDetail(id);
@@ -83,7 +82,7 @@ public class BoardController {
         return "adm/board/modify";
     }
 
-    @PostMapping("/boards/modify/{id}")
+    @PostMapping("/adm/boards/modify/{id}")
     public String modifyBoard(@PathVariable(name="id")Long id, BoardModifyForm boardModifyForm) {
         try {
             boardService.modify(id, boardModifyForm);
@@ -94,7 +93,7 @@ public class BoardController {
     }
 
     //삭제
-    @GetMapping("/boards/delete/{id}")
+    @GetMapping("/adm/boards/delete/{id}")
     public String doDeleteBoard(@PathVariable(name = "id") Long id){
 
         try {

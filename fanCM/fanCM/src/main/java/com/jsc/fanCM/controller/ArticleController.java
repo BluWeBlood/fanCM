@@ -82,7 +82,7 @@ public class ArticleController {
 
             articleService.modifyArticle(articleModifyForm,findBoard, id);
 //            return "redirect:/articles/" + id;
-            return "redirect:/adm/boards/" + id;
+            return "redirect:boards/" + id;
         } catch (Exception e) {
             return "usr/article/modify";
         }

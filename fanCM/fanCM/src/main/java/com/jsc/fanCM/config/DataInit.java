@@ -1,13 +1,20 @@
 package com.jsc.fanCM.config;
 
+import com.jsc.fanCM.dao.ArticleRepository;
+import com.jsc.fanCM.dao.BoardRepository;
 import com.jsc.fanCM.dao.MemberRepository;
+import com.jsc.fanCM.domain.Article;
+import com.jsc.fanCM.domain.Board;
 import com.jsc.fanCM.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.jar.JarEntry;
 
 @Component
 @RequiredArgsConstructor
@@ -21,10 +28,12 @@ public class DataInit {
     }
 
     @Component
-    @Service
+    @Transactional
     @RequiredArgsConstructor
     static class InitService {
         private final MemberRepository memberRepository;
+        private final BoardRepository boardRepository;
+        private final ArticleRepository articleRepository;
 
         public void initAdmin() {
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -37,10 +46,21 @@ public class DataInit {
                     Role.ADMIN
             );
             memberRepository.save(admin);
+
+            for(int i=1;i<=3;i++) {
+                Board board = Board.createBoard(
+                        "게시판" + i,
+                        "게시판" + i,
+                        admin
+                );
+                boardRepository.save(board);
+            }
         }
 
         public void initMember() {
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+            List<Board> boardList = boardRepository.findAll();
 
             for(int i=1;i<=5;i++) {
                 Member member = Member.createMember(
@@ -52,6 +72,20 @@ public class DataInit {
                         Role.MEMBER
                 );
                 memberRepository.save(member);
+
+                for(int j=i;j<=3; j++) {
+                    for(int k=1; k<=3; k++) {
+                        Article article = Article.createArticle(
+                                "제목" + k,
+                                "내용" + k
+                        );
+                        article.setMember(member);
+                        article.setBoard(boardList.get(j -1));
+
+                        articleRepository.save(article);
+                    }
+                }
+
             }
 
         }
