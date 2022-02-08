@@ -19,27 +19,32 @@
                 <span> 회원가입</span>
             </div>
 
-            <form action="" th:action="@{~/members/join}" method="POST">
+            <form action="" th:action="@{~/members/join}" th:object="${memberSaveForm}" method="POST">
                 <div class="flex justify-center">
                     <div class="flex-col">
                         <div class="form-item mb-4">
-                            <input class="border rounded p-1 rounded bg-gray-50" name="loginId" type="text" placeholder="아이디" autocomplete="off" required>
+                            <input class="border rounded p-1 rounded bg-gray-50" name="loginId" type="text" placeholder="아이디" autocomplete="off" th:field="*{loginId}" th:errorclass="field-error">
+                            <span th:errors="*{loginId}"></span>
                         </div>
 
                         <div class="form-item mb-4">
-                            <input class="border rounded p-1 rounded bg-gray-50" name="loginPw" type="password" placeholder="비밀번호" autocomplete="off" required>
+                            <input class="border rounded p-1 rounded bg-gray-50" name="loginPw" type="password" placeholder="비밀번호" autocomplete="off" th:field="*{loginPw}" th:errorclass="field-error">
+                            <span th:errors="*{loginPw}"></span>
                         </div>
 
                         <div class="form-item mb-4">
-                            <input class="border rounded p-1 rounded bg-gray-50" name="name" type="text" placeholder="이름" autocomplete="off" required>
+                            <input class="border rounded p-1 rounded bg-gray-50" name="name" type="text" placeholder="이름" autocomplete="off" th:field="*{name}" th:errorclass="field-error">
+                            <span th:errors="*{name}"></span>
                         </div>
 
                         <div class="form-item mb-4">
-                            <input class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" placeholder="닉네임" autocomplete="off" required>
+                            <input class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" placeholder="닉네임" autocomplete="off" th:field="*{nickname}" th:errorclass="field-error">
+                            <span th:errors="*{nickname}"></span>
                         </div>
 
                         <div class="form-item mb-4">
-                            <input class="border rounded p-1 rounded bg-gray-50" name="email" type="email" placeholder="이메일" autocomplete="off" required>
+                            <input class="border rounded p-1 rounded bg-gray-50" name="email" type="email" placeholder="이메일" autocomplete="off" th:field="*{email}" th:errorclass="field-error">
+                            <span th:errors="*{email}"></span>
                         </div>
                     </div>
                 </div>
