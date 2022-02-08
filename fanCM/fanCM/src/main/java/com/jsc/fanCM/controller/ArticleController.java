@@ -1,6 +1,5 @@
 package com.jsc.fanCM.controller;
 
-import com.jsc.fanCM.domain.Article;
 import com.jsc.fanCM.domain.Board;
 import com.jsc.fanCM.domain.Member;
 import com.jsc.fanCM.dto.article.ArticleDTO;
@@ -89,7 +88,7 @@ public class ArticleController {
 //            return "redirect:/articles/" + id;
             return "redirect:/boards/" + id;
         } catch (Exception e) {
-            return "redirect:/";
+            return "redirect:/articles/modify/" + id;
         }
     }
 
