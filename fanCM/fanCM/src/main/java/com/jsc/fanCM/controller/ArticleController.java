@@ -83,6 +83,7 @@ public class ArticleController {
             }
 
             Board findBoard = boardService.getBoard(id);
+//            Board findBoard = boardService.getBoard(articleModifyForm.getBoard_id());
 
             articleService.modifyArticle(articleModifyForm,findBoard, id);
 //            return "redirect:/articles/" + id;

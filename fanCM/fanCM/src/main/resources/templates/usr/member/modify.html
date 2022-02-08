@@ -20,27 +20,30 @@
         <span> 회원정보 수정 </span>
       </div>
 
-      <form action="" th:action="@{~/members/modify}" method="POST">
+      <form action="" th:action="@{~/members/modify/} + ${memberModifyForm.id}" th:object="${memberModifyForm}" method="post" style="text-align:left" class="bg-white rounded px-8 pt-6 pb-8 mb-4" >
         <div class="flex justify-center">
           <div class="flex-col">
             <div class="form-item mb-4">
-              <input class="border rounded p-1 rounded bg-gray-50" name="loginId" type="text" th:value="${member.loginId}" placeholder="아이디" readonly>
+              <input class="border rounded p-1 rounded bg-gray-50" name="loginId" type="text" th:field="*{loginId}" placeholder="아이디" readonly>
             </div>
 
             <div class="form-item mb-4">
-              <input class="border rounded p-1 rounded bg-gray-50" name="loginPw" type="password" placeholder="비밀번호">
+              <input class="border rounded p-1 rounded bg-gray-50" name="loginPw" type="password" placeholder="비밀번호" th:field="*{loginPw}" th:errorclass="field-error">
+              <span th:errors="*{loginPw}"></span>
             </div>
 
             <div class="form-item mb-4">
-              <input class="border rounded p-1 rounded bg-gray-50" name="name" type="text" th:value="${member.name}" placeholder="이름" readonly>
+              <input class="border rounded p-1 rounded bg-gray-50" name="name" type="text" th:field="*{name}" placeholder="이름" readonly>
             </div>
 
             <div class="form-item mb-4">
-              <input class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" th:value="${member.nickname}" placeholder="닉네임">
+              <input class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" th:field="*{nickname}" th:errorclass="field-error" placeholder="닉네임">
+              <span th:errors="*{nickname}"></span>
             </div>
 
             <div class="form-item mb-4">
-              <input class="border rounded p-1 rounded bg-gray-50" name="email" type="email" th:value="${member.email}" placeholder="이메일">
+              <input class="border rounded p-1 rounded bg-gray-50" name="email" type="email" th:field="*{email}" th:errorclass="field-error" placeholder="이메일">
+              <span th:errors="*{email}"></span>
             </div>
           </div>
         </div>
