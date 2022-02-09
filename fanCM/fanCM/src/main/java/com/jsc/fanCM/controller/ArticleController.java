@@ -31,9 +31,12 @@ public class ArticleController {
 
     @GetMapping("/boards/{id}/articles/write")
     public String showWrite(@PathVariable(name = "id")Long id, Model model) {
-        BoardDTO boardDetail = boardService.getBoardDetail(id);
+        // BoardDTO boardDetail = boardService.getBoardDetail(id);
 
-        model.addAttribute("board", boardDetail);
+        ArticleDTO findArticle = articleService.getArticle(id);
+
+        model.addAttribute("boardName", findArticle.getBoardName());
+        model.addAttribute("boardId", findArticle.getBoardId());
 
         model.addAttribute("articleSaveForm",new ArticleSaveForm());
 
@@ -42,6 +45,11 @@ public class ArticleController {
     @PostMapping("/boards/{id}/articles/write")
     public String doWrite(@Validated ArticleSaveForm articleSaveForm, BindingResult bindingResult, Model model, Principal principal,  @PathVariable(name = "id")Long id){
         if(bindingResult.hasErrors()) {
+            ArticleDTO findArticle = articleService.getArticle(id);
+
+            model.addAttribute("boardName", findArticle.getBoardName());
+            model.addAttribute("boardId", findArticle.getBoardId());
+
             return "usr/article/write";
         }
 

@@ -14,20 +14,22 @@
         <div class="contents">
             <div class="">
                 <span>게시판 이름 :</span>
-                <span th:text="${board.name}"></span>
+                <span th:text="${boardName}"></span>
             </div>
 
-            <form action="" th:action="@{~/boards/} + ${board.id} + @{/articles/write}" method="POST">
-                <input type="hidden" th:value="${board.id}" name="board_id">
+            <form action="" th:action="@{~/boards/} + ${boardId} + @{/articles/write}" th:object="${articleSaveForm}" method="POST">
+                <input type="hidden" th:value="${boardId}" name="board_id">
 
                 <div class="form-item">
                     <span>제목</span>
-                    <input name="title" type="text" required>
+                    <input name="title" type="text" th:field="*{title}" th:errorclass="field-error">
+                    <span th:errors="*{title}"></span>
                 </div>
 
                 <div class="form-item">
                     <span>내용</span>
-                    <textarea name="body" id="article-body" cols="30" rows="10"></textarea>
+                    <textarea name="body" id="article-body" cols="30" rows="10" th:field="*{body}" th:errorclass="field-error"></textarea>
+                    sq<span th:errors="*{title}"></span>
                 </div>
 
                 <div class="form-item">
