@@ -72,10 +72,14 @@ public class ArticleController {
     @GetMapping("articles/modify/{id}")
     public String showModify(@PathVariable(name = "id")Long id, Model model) {
         try {
-            ArticleDTO article = articleService.getArticle(id);
+            ArticleDTO findarticle = articleService.getArticle(id);
             // Article article = articleService.getById(id);
 
-            model.addAttribute("article", article);
+            model.addAttribute("boarName", findarticle.getBoardName());
+            model.addAttribute("boardId",findarticle.getBoardId());
+            model.addAttribute("articleId",findarticle.getId());
+            model.addAttribute("articleModifyForm", new ArticleModifyForm(findarticle));
+
             return "usr/article/modify";
         } catch (Exception e) {
             return "redirect:/";
@@ -83,7 +87,18 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/modify/{id}")
-    public String doModify(@PathVariable(name="id")Long id,ArticleModifyForm articleModifyForm,Principal principal) {
+    public String doModify(@PathVariable(name="id")Long id,@Validated ArticleModifyForm articleModifyForm, BindingResult bindingResult, Principal principal , Model model) {
+
+        if (bindingResult.hasErrors()) {
+            ArticleDTO findarticle = articleService.getArticle(id);
+
+            model.addAttribute("boarName", findarticle.getBoardName());
+            model.addAttribute("boardId",findarticle.getBoardId());
+            model.addAttribute("articleId",findarticle.getId());
+
+            return "usr/article/modify";
+        }
+
         try {
             ArticleDTO findArticle = articleService.getArticle(id);
             if(!findArticle.getMemberLoginId().equals(principal.getName())) {
