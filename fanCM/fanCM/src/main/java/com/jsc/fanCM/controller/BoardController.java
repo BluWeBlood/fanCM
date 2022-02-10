@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +38,10 @@ public class BoardController {
     }
 
     @PostMapping("/adm/boards/add")
-    public String doAddBoard(BoardSaveForm boardSaveForm, Principal principal) {
-
+    public String doAddBoard(@Validated BoardSaveForm boardSaveForm, BindingResult bindingResult, Principal principal) {
+        if(bindingResult.hasErrors()) {
+            return "adm/board/add";
+        }
         Member findAdmin = memberService.findByLoginId(principal.getName());
         boardService.save(boardSaveForm, findAdmin);
 
@@ -70,6 +73,8 @@ public class BoardController {
     public String showModifyBoard(@PathVariable(name="id")Long id, Model model){
         try{
             BoardDTO board = boardService.getBoardDetail(id);
+
+            model.addAttribute("boardId",board.getId());
             model.addAttribute("board",new BoardModifyForm(
                     board.getId(),
                     board.getName(),
@@ -83,7 +88,14 @@ public class BoardController {
     }
 
     @PostMapping("/adm/boards/modify/{id}")
-    public String modifyBoard(@PathVariable(name="id")Long id, BoardModifyForm boardModifyForm) {
+    public String modifyBoard(@PathVariable(name="id")Long id, @Validated BoardModifyForm boardModifyForm, BindingResult bindingResult, Model model) {
+
+        BoardDTO findBoard = boardService.getBoardDetail(id);
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("boardId", findBoard.getId());
+            return "adm/boards/modify";
+        }
+
         try {
             boardService.modify(id, boardModifyForm);
         } catch (Exception e) {
