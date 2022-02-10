@@ -45,7 +45,7 @@ public class BoardController {
         Member findAdmin = memberService.findByLoginId(principal.getName());
         boardService.save(boardSaveForm, findAdmin);
 
-        return "redirect:/adm/boards";
+        return "redirect:/boards";
     }
 
     // 게시판 리스트
@@ -75,7 +75,7 @@ public class BoardController {
             BoardDTO board = boardService.getBoardDetail(id);
 
             model.addAttribute("boardId",board.getId());
-            model.addAttribute("board",new BoardModifyForm(
+            model.addAttribute("boardModifyForm",new BoardModifyForm(
                     board.getId(),
                     board.getName(),
                     board.getDetail()
@@ -101,7 +101,7 @@ public class BoardController {
         } catch (Exception e) {
             return "adm/board/modify";
         }
-        return "redirect:/";
+        return "redirect:/boards";
     }
 
     //삭제
