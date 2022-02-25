@@ -6,22 +6,33 @@ import com.jsc.fanCM.domain.Board;
 import com.jsc.fanCM.domain.Member;
 import com.jsc.fanCM.dto.article.ArticleListDTO;
 import com.jsc.fanCM.dto.board.BoardDTO;
+import com.jsc.fanCM.dto.board.BoardListDTO;
 import com.jsc.fanCM.dto.board.BoardModifyForm;
 import com.jsc.fanCM.dto.board.BoardSaveForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+
+    public List<BoardListDTO> getBoardsList() {
+
+        List<BoardListDTO> boardListDTOList = new ArrayList<>();
+
+        List<Board> boardList = boardRepository.findAll();
+
+        for(Board board : boardList) {
+            BoardListDTO boardListDTO = new BoardListDTO(board);
+            boardListDTOList.add(boardListDTO);
+        }
+        return boardListDTOList;
+    }
 
     // DB 저장/수정/삭제시 필요
     @Transactional
