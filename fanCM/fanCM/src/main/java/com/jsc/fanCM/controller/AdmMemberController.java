@@ -22,7 +22,7 @@ public class AdmMemberController {
     public String showManageMember(Model model) {
         List<MemberDTO> members = admMemberService.getMemberList();
 
-        model.addAttribute("member", members);
+        model.addAttribute("members", members);
 
         return "adm/member/main";
     }

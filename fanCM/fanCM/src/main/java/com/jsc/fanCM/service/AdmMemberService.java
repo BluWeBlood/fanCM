@@ -32,7 +32,7 @@ public class AdmMemberService {
         return memberDTOList;
     }
 
-    public AdmMemberDetailDTO getMemberDetail(Long id) {
+    public AdmMemberDetailDTO getMemberDetail(Long id) { // 회원정보 + 작성된 글
         List<ArticleListDTO> articleDTOList = new ArrayList<>();
 
         Optional<Member> memberOptional = memberRepository.findById(id);
