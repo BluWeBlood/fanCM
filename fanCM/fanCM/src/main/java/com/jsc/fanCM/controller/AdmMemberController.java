@@ -35,4 +35,11 @@ public class AdmMemberController {
 
         return "adm/member/detail";
     }
+
+    @GetMapping("/members/ban/{id}")
+    public String doBanMember(@PathVariable(name = "id")Long id) {
+        admMemberService.banMember(id);
+
+        return "redirect:/adm/members";
+    }
 }

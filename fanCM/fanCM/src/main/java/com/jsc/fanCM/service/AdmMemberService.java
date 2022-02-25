@@ -8,6 +8,7 @@ import com.jsc.fanCM.dto.article.ArticleListDTO;
 import com.jsc.fanCM.dto.member.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,4 +51,14 @@ public class AdmMemberService {
         return new AdmMemberDetailDTO(findMember,articleDTOList);
     }
 
+    @Transactional
+    public void banMember(Long id) {
+        Optional<Member> memberOptional = memberRepository.findById(id);
+
+        memberOptional.orElseThrow(
+                ()-> new IllegalStateException("존재하지 않는 회원입니다.")
+        );
+
+        memberRepository.delete(memberOptional.get());
+    }
 }
