@@ -12,7 +12,7 @@
 
             <ul class="flex">
                 <a href="/" class="text-2xl ml-24">
-                    <span>윤이나반짝</span>
+                    <span>팬 카페</span>
                 </a>
             </ul>
 
@@ -28,15 +28,18 @@
                     <!-- Dropdown menu -->
                     <div id="dropdownInformation" class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-1" aria-labelledby="dropdownInformationButton">
-                            <li>
-                                <a href="/boards" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">게시물 작성</a>
+                            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a th:href="@{~/adm/page}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">관리자 페이지</a>
                             </li>
                             <li>
-                                <a href="/members/modify/{id}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">회원정보 수정</a>
+                                <a href="/articles/write/" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">게시물 작성</a>
+                            </li>
+                            <li>
+                                <a href="/members/modifygit " class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">회원정보 수정</a>
                             </li>
                         </ul>
                         <div class="py-1">
-                            <a href="/doLogout" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">로그아웃</a>
+                            <a href="/members/logout" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">로그아웃</a>
                         </div>
                     </div>
                 </li>

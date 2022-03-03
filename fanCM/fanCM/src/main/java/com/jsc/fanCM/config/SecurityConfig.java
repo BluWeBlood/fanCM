@@ -51,18 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .passwordParameter("loginPw")
                     .defaultSuccessUrl("/")
                 .and()
-                .logout()
-                    .logoutUrl("/doLogout")
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                    .logoutSuccessUrl("/members/login")
+                .logout() // 로그아웃 관리
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
+                    .logoutSuccessUrl("/")
                     .invalidateHttpSession(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("members/logout"))
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIOND")
-                .clearAuthentication(true)
-
-                .and()
+                    .deleteCookies("JSESSIOND")
+                    .clearAuthentication(true)
+                .and() // 세션 관리
                     .sessionManagement()
                         .invalidSessionUrl("/")
                         .maximumSessions(1) //최대 세션 개수
