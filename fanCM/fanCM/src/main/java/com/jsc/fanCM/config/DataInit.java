@@ -73,7 +73,7 @@ public class DataInit {
                 );
                 memberRepository.save(member);
 
-                for(int j=i;j<=3; j++) {
+                for(int j=1;j<=3; j++) {
                     for(int k=1; k<=3; k++) {
                         Article article = Article.createArticle(
                                 "제목" + k,
