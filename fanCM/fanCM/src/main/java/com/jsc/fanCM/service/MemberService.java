@@ -2,9 +2,12 @@ package com.jsc.fanCM.service;
 
 import com.jsc.fanCM.config.Role;
 import com.jsc.fanCM.dao.MemberRepository;
+import com.jsc.fanCM.domain.Article;
 import com.jsc.fanCM.domain.Member;
+import com.jsc.fanCM.dto.article.ArticleDTO;
 import com.jsc.fanCM.dto.member.MemberModifyForm;
 import com.jsc.fanCM.dto.member.MemberSaveForm;
+import com.jsc.fanCM.dto.member.MyPageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +25,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
+    private final ArticleService articleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -86,6 +92,22 @@ public class MemberService implements UserDetailsService {
                 () -> new IllegalStateException("존재하지 않는 회원 입니다.")
         );
         return memberOptional.get();
+    }
+
+    public MyPageDTO getMyArticles(String loginId) {
+
+        List<ArticleDTO> articleDTOList = new ArrayList<>();
+
+        Member findMember = findByLoginId(loginId);
+
+        List<Article> articles = findMember.getArticles();
+
+        for(Article article : articles){
+            ArticleDTO findArticle = articleService.getArticle(article.getId());
+        articleDTOList.add(findArticle);
+        }
+
+        return new MyPageDTO(findMember,articleDTOList);
     }
 
     //회원정보 수정
