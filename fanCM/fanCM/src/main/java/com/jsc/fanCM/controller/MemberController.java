@@ -1,6 +1,7 @@
 package com.jsc.fanCM.controller;
 
 import com.jsc.fanCM.domain.Member;
+import com.jsc.fanCM.dto.member.CheckStatus;
 import com.jsc.fanCM.dto.member.MemberSaveForm;
 import com.jsc.fanCM.dto.member.MemberModifyForm;
 import com.jsc.fanCM.dto.member.MemberLoginForm;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -21,11 +20,15 @@ import java.security.Principal;
 public class MemberController {
     private final MemberService memberService;
 
-    /**
-     * 회원가입페이지 이동
-     * @param model
-     * @return
-     */
+    @RequestMapping("/members/check/id")
+    @ResponseBody
+    public CheckStatus checkDuple(@RequestParam String loginId){
+        boolean isExists = memberService.isDupleMember(loginId);
+
+        CheckStatus checkStatus = new CheckStatus(isExists);
+        return checkStatus;
+    }
+
     @GetMapping("/members/join")
     public String showJoin(Model model) {
         model.addAttribute("memberSaveForm", new MemberSaveForm());
