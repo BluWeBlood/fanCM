@@ -128,7 +128,11 @@ public class MemberService implements UserDetailsService {
 
     }
 
-    public boolean isDupleMember(String loginId) {
+    public boolean isDupleLoginId(String loginId) {
         return memberRepository.existsByLoginId(loginId);
+    }
+
+    public boolean isDupleNickname(String nickname) {
+        return memberRepository.existsByNickname(nickname);
     }
 }

@@ -37,7 +37,7 @@
                         <div class="form-item mb-4">
                             <input id="loginId" class="border rounded p-1 rounded bg-gray-50" name="loginId" type="text" placeholder="아이디" autocomplete="off" th:field="*{loginId}" th:errorclass="field-error">
                             <span th:errors="*{loginId}"></span>
-                            <button type-="button" onclick="checkDupleLoginId()">중복확인</button>
+                            <button type="button" onclick="checkDupleLoginId()">중복확인</button>
                         </div>
 
                         <div class="form-item mb-4">
@@ -51,8 +51,9 @@
                         </div>
 
                         <div class="form-item mb-4">
-                            <input class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" placeholder="닉네임" autocomplete="off" th:field="*{nickname}" th:errorclass="field-error">
+                            <input id="nickname" class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" placeholder="닉네임" autocomplete="off" th:field="*{nickname}" th:errorclass="field-error">
                             <span th:errors="*{nickname}"></span>
+                            <button type="button" onclick="checkDupleNickname()">중복확인</button>
                         </div>
 
                         <div class="form-item mb-4">

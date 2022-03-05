@@ -1,5 +1,6 @@
 let CHECK_STATUS = false;
 let LOGIN_ID_STATUS = false;
+let NICKNAME_STATUS = false;
 
 async function checkDupleLoginId(){
 
@@ -8,13 +9,11 @@ async function checkDupleLoginId(){
 
     await fetch("http://localhost:8085/members/check/id?loginId=" + loginId)
     .then(
-
         (response) => {
             return response.json();
         }
     )
     .then(
-
         (data) => {
 
             let idCheck = data;
@@ -28,7 +27,7 @@ async function checkDupleLoginId(){
 
             LOGIN_ID_STATUS = false;
             console.log(LOGIN_ID_STATUS);
-            alert("이미 존재하는 아이디 입니다.");
+            alert("가입할 수 없는 아이디 입니다.");
 
             }else{
 
@@ -46,9 +45,45 @@ async function checkDupleLoginId(){
     )
 }
 
-function checkStatus(){
+async function checkDupleNickname(){
+    let inputNickname = document.querySelector("#nickname");
+    let nickname = inputNickname.value;
 
-    if(LOGIN_ID_STATUS){
+    await fetch("http://localhost:8085/members/check/nickname?nickname=" + nickname)
+    .then(
+        (response) => {
+
+            return response.json();
+        }
+
+    )
+    .then(
+        (data) => {
+
+            let nicknameCheck = data;
+
+            if(nicknameCheck.status || nickname===""){
+                NICKNAME_STATUS = false;
+                alert("가입할 수 없는 아이디 입니다.");
+            }else{
+                NICKNAME_STATUS = true;
+                alert("가입하실 수 있는 닉네임 입니다.")
+            }
+
+
+        }
+
+    )
+    .catch(
+        (error) => {
+            console.log(error);
+        }
+    )
+}
+
+
+function checkStatus(){
+    if(LOGIN_ID_STATUS && NICKNAME_STATUS){
         CHECK_STATUS = true;
     }else{
         CHECK_STATUS = false;
