@@ -3,6 +3,19 @@ server:
 
 spring:
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: gpfla3690@gmail.com
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: ture
+
+
   devtools:
     livereload:
       enabled: true
