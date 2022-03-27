@@ -37,7 +37,7 @@ public class BoardController {
     }
 
     @GetMapping("/boards/{id}") // https://localhost:8085/boards/1?page=7&searchKeyword=제목
-    public String showBoardDetail(@PathVariable(name = "id")Long id, Model model, @RequestParam(name="page", defaultValue = "1") int page, @RequestParam(name = "searchKeyword")String searchKeyword) {
+    public String showBoardDetail(@PathVariable(name = "id")Long id, Model model, @RequestParam(name="page", defaultValue = "1") int page, @RequestParam(name = "searchKeyword", defaultValue = "")String searchKeyword) {
 
         int size = 10;
 
@@ -85,8 +85,8 @@ public class BoardController {
             model.addAttribute("articles",articlePage);
             model.addAttribute("maxPage",lastPage);
             model.addAttribute("currentPage",page);
+            model.addAttribute("keyword", searchKeyword);
 
-            model.addAttribute("board",boardDetail);
         } catch (Exception e) {
             return "redirect:/";
         }
