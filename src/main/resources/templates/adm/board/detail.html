@@ -33,20 +33,28 @@
                 </thead>
 
                 <tbody>
-
-                <tr th:each="article : ${articles}">
-                    <td>
-                        <span th:text="${article.id}"></span>
-                    </td>
-                    <td>
-                        <a th:href="@{~/articles/} + ${article.id}">
-                            <span th:text="${article.title}"></span>
-                        </a>
-                    </td>
-                    <td>
-                        <span th:text="${article.nickname}"></span>
-                    </td>
-                </tr>
+                <th:block th:if="${articles.size() != 0}">
+                    <tr th:each="article : ${articles}">
+                        <td>
+                            <span th:text="${article.id}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{~/articles/} + ${article.id}">
+                                <span th:text="${article.title}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <span th:text="${article.nickname}"></span>
+                        </td>
+                    </tr>
+                </th:block>
+                <th:block th:unless="${articles.size() != 0}">
+                    <tr>
+                        <td>
+                            <span>검색 결과가 없습니다.</span>
+                        </td>
+                    </tr>
+                </th:block>
                 </tbody>
 
             </table>
@@ -54,8 +62,15 @@
         </div>
 
         <div class="page-container">
-            <th:block th:each="i : ${#numbers.sequence(1, maxPage)}">
-                <a th:href="@{~/boards/} + ${board.id} + @{?page=} + ${i}" th:text="${i}"></a>
+            <th:block th:if="${articles.size() != 0}">
+                <th:block th:each="i : ${#numbers.sequence(1, maxPage)}">
+                    <a th:href="@{~/boards/} + ${board.id} + @{?page=} + ${i}" th:text="${i}"></a>
+                </th:block>
+            </th:block>
+            <th:block>
+                <th:block th:unless="${articles.size() != 0}">
+                    <a href="@{~/boards/} + ${board.id} + @{?page=} + 1" th:test="1"></a>
+                </th:block>
             </th:block>
         </div>
 

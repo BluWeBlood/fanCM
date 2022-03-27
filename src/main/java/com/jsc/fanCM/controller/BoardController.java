@@ -36,8 +36,8 @@ public class BoardController {
         return "adm/board/list";
     }
 
-    @GetMapping("/boards/{id}") // https://localhost:8085/boards/1?page=7
-    public String showBoardDetail(@PathVariable(name = "id")Long id, Model model, @RequestParam(name="page", defaultValue = "1") int page) {
+    @GetMapping("/boards/{id}") // https://localhost:8085/boards/1?page=7&searchKeyword=제목
+    public String showBoardDetail(@PathVariable(name = "id")Long id, Model model, @RequestParam(name="page", defaultValue = "1") int page, @RequestParam(name = "searchKeyword")String searchKeyword) {
 
         int size = 10;
 
@@ -45,6 +45,18 @@ public class BoardController {
             BoardDTO boardDetail = boardService.getBoardDetail(id);
 
             List<ArticleListDTO> articleListDTO = boardDetail.getArticleListDTO();
+
+            List<ArticleListDTO> store = new ArrayList<>();
+
+            for(ArticleListDTO listDTO : articleListDTO) {
+                if(listDTO.getTitle().contains(searchKeyword) ) {
+                    store.add(listDTO);
+                }
+            }
+
+            if(store.size() != 0) {
+                articleListDTO = store;
+            }
 
             Collections.reverse(articleListDTO); //reverse
             // 0, 10, 20, ...
@@ -64,6 +76,10 @@ public class BoardController {
 
             // 페이지 가르기
             List<ArticleListDTO> articlePage = articleListDTO.subList(startIndex, lastIndex);
+
+            if( !searchKeyword.equals("") && store.size() == 0 ) {
+                articlePage = store;
+            }
 
             model.addAttribute("board",boardDetail);
             model.addAttribute("articles",articlePage);
